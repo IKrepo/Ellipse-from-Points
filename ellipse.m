@@ -1,18 +1,38 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%                               ellipse.m                                 %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%             Ioannis Koureas ID:29830206 ik4n17@soton.ac.uk              %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%                          !!! MAIN PROGRAM !!!                           %
+%                         ellipse_from_points.m                           %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                                                                         %
 % The purpose of this function is to compute the long-axis and the        %
-% short-axis of an ellipse given a number of points that made up the      %
+% short-axis of an ellipse given a number of points that make up the      %
 % ellipse.                                                                %
 %                                                                         %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Read the txt file that contains the x and y coordinates of the ellipse.
+
+%Change the directory accordingly.
+ellipse_data = 'C:\Users\Desktop\';
+
+test_file = 'Ellipse.txt';
+test_name = [ellipse_data test_file];
+
+% open the txt-format data file, read-only:
+my_fid    = fopen(test_name, 'r');
+
+% the first six lines are headers; only read data below these files.
+rawdata   = textscan(my_fid, '%f%f', 'HeaderLines', 6);
+x    = rawdata{1};
+y    = rawdata{2};
+
+fclose(my_fid);      % all data read; close file now.
+clear rawdata my_fid % these variables are not needed anymore.
+
+figure()
+plot(x, y, '--')
+
+[short_axis, long_axis] = ellipse(x, y)
+
 
 function [short_axis, long_axis] = ellipse(x, y)
 
@@ -40,13 +60,10 @@ function [short_axis, long_axis] = ellipse(x, y)
 % for the values that correspond to x^2, xy, y^2, x and y 
 X = [x.^2, x.*y, y.^2, x, y ];
 
-% Since the points represent the actual x and y coordinates of an ellipse
-% the process is quite straightforward. In case the points were an
-% approximation of an ellipse then the procedure would be much more
-% complicated. As a result, since we have an equation with 5 (since we
-% divide by F) unkowns we need 5 equations. We can take any 5 equations
-% from the array in random since all the points represent an exact slution
-% for the elluipse.
+% The given points represent the x and y coordinates of an ellipse.
+% Since we have an equation with 5 unkowns we need 5 equations.
+% We can take any 5 points from the array in random since all the
+% points represent an exact solution of the ellipse.
 X = X(1:20:100, :);
 
 % Now we have to solve a system of the form Ax = B to find A. In this case
