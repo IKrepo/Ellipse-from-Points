@@ -1,6 +1,6 @@
-**********************************	
-*** EXPERIMENTAL FEEDBACK DATA ***	
-*** PIN ON DISC TEST #7: ellipse 2 ***	
+*********************************	
+*** EXPERIMENTAL DATA EXAMPLE ***	
+***          ellipse          ***	
 **********************************	
 	
 X	Y
